@@ -316,7 +316,9 @@ namespace ISBM_Temp_Sensor
             //Open a publication session if button content is "Connect".
             if ((string)buttonConnect.Content == "Connect")
             {
-                string uriString = String.Format(textBoxHostName.Text + "/channels/{0}/publication-sessions", textBoxChannelId.Text.Replace(@"/", "%252F"));
+                //Percent encoding
+                string encodedChannelId = System.Uri.EscapeDataString(textBoxChannelId.Text);
+                string uriString = String.Format(textBoxHostName.Text + "/channels/{0}/publication-sessions", encodedChannelId.Replace(@"%2F", "%252F"));
 
                 //Open a publication session using ISBMAPI function.
                 string _ISBMResponse = await ISBMApi("", uriString, "Post");
