@@ -4,7 +4,7 @@ A demo IoT device publish measured data using ISBM 2.0 Adapter.
 
 ### Objectives
 
-To build a Raspberry Pi IoT device to measure room temperature using MCP9808. The measured data will be published in CCOM format by ISBM 2.0 adapter for other IoT devices to consume.
+To build a Raspberry Pi IoT device to measure room temperature using MCP9808: The measured data will be published in CCOM format by ISBM 2.0 adapter for other IoT devices to consume.
 
 ### Project Information
 
