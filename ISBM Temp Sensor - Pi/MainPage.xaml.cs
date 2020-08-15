@@ -62,8 +62,8 @@ namespace ISBM_Temp_Sensor
             textBlockPublishStatus.Text = "";
             buttonPublish.IsEnabled = false;
 
-            //Delay Start for timer initializations.
-            //Let all the page initialization complete first.
+            // Delay Start for timer initializations.
+            // Let all the page initialization complete first.
             timerInitialize = new DispatcherTimer();
             timerInitialize.Interval = TimeSpan.FromMilliseconds(100);
             timerInitialize.Tick += TimerInitialize_Tick;
@@ -73,9 +73,9 @@ namespace ISBM_Temp_Sensor
         private async void TimerInitialize_Tick(object sender, object e)
         {
             timerInitialize.Stop();
-            //Initalize temperature reading timer.
+            // Initalize temperature reading timer.
             await IntializeMCP9808Async();
-            //Initial message publication timer.
+            // Initial message publication timer.
             await IntializePublishAsync();
         }
 
@@ -86,32 +86,32 @@ namespace ISBM_Temp_Sensor
                 byte[] registerPointer = new byte[1];
                 byte[] temperatureData = new byte[2];
 
-                //Register Pointer (Hex) 
+                // Register Pointer (Hex) 
                 registerPointer[0] = 0x05;
 
-                //Read temperature data from sensor using register pointer 0x05
+                // Read temperature data from sensor using register pointer 0x05
                 MCP9808.WriteRead(registerPointer, temperatureData);
 
-                //MSB - Most Significant Bits
+                // MSB - Most Significant Bits
                 byte MSB = temperatureData[0];
-                //LSB - Least Significant Bits
+                // LSB - Least Significant Bits
                 byte LSB = temperatureData[1];
 
-                //Keep the lower 5 bits for most significant bits,
-                //The higher 3 bits are for status only.
-                //Please see MCP9808 data sheet.
+                // Keep the lower 5 bits for most significant bits,
+                // The higher 3 bits are for status only.
+                // Please see MCP9808 data sheet.
                 MSB = Convert.ToByte(MSB & 0x1F);
 
-                //Assign MSB byte value to upperByte in floating point.
+                // Assign MSB byte value to upperByte in floating point.
                 float upperByte = MSB;
-                //Assign LSB byte value to lowerByte in floating point 
+                // Assign LSB byte value to lowerByte in floating point 
                 float lowerByte = LSB;
 
-                //For Temperature >= 0 Celsius,
-                //Temperature = UpperByte x 2^4 + LowerByte x 2^-4
-                //Please see MCP9808 data sheet for Temperature < 0 Celsius.
+                // For Temperature >= 0 Celsius,
+                //T emperature = UpperByte x 2^4 + LowerByte x 2^-4
+                // Please see MCP9808 data sheet for Temperature < 0 Celsius.
                 float displayTemp = upperByte * 16 + lowerByte / 16;
-                //Round display temperature to 2 decimal places.
+                // Round display temperature to 2 decimal places.
                 Double roundedDisplayTemp = Math.Round(displayTemp, 2, MidpointRounding.AwayFromZero);
                 
                 textBlockValue.Text = roundedDisplayTemp.ToString();
@@ -124,13 +124,13 @@ namespace ISBM_Temp_Sensor
 
         private async void TimerPublish_Tick(object sender, object e)
         {
-            //Pause publish timer when pusbishing message.
+            // Pause publish timer when publishing message.
             timerPublish.Stop();
             textBlockPublishStatus.Text = "Publishing";
             textBoxStatusCode.Text = "";
             textBoxMessage.Text = "";
             textBoxResponse.Text = "";
-            //Publish message.
+            // Publish message.
             await PublishBOD();
 
             
@@ -140,17 +140,17 @@ namespace ISBM_Temp_Sensor
         {
             
             await Task.Delay(100);
-            //Load BOD template into Newtonsoft JObject.
+            // Load BOD template into Newtonsoft JObject.
             JObject objBOD = JObject.Parse(templateBOD);
 
-            //Setup BOD and CCOM values.
+            // Setup BOD and CCOM values.
             objBOD["syncMeasurements"]["applicationArea"]["bODID"] = System.Guid.NewGuid().ToString();
             objBOD["syncMeasurements"]["applicationArea"]["creationDateTime"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
             objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["recorded"]["dateTime"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
             objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["data"]["measure"]["value"]["numeric"] = textBlockValue.Text;
 
-            //Build ISBM message, HTTP request body.
+            // Build ISBM message, HTTP request body.
             string jsonBOD = "{\"topics\": [\"" + textBoxTopic.Text + "\"], \"messageContent\": {\"mediaType\": \"application/json\" , \"content\":" + objBOD.ToString(Newtonsoft.Json.Formatting.None) + "},\"expiry\": \"P1D\"}";
              
             string uriString = String.Format(textBoxHostName.Text + "/sessions/{0}/publications", textBoxSessionId.Text);
@@ -159,13 +159,13 @@ namespace ISBM_Temp_Sensor
             {
 
                 string _ChannelResponse = "";
-                //Try three times just in case with a poor internet connection
+                // Try three times just in case with a poor internet connection
                 for (int x = 0; x < 3; x++)
                 {
-                    //Skip publishing message if the status code is "201", success.
+                    // Skip publishing message if the status code is "201", success.
                     if (textBoxStatusCode.Text != "201")
                     {
-                        //Publish ISBM message using ISBMAPI function.
+                        // Publish ISBM message using ISBMAPI function.
                         _ChannelResponse = await ISBMApi(jsonBOD, uriString, "Post");
                     }
                     else
@@ -178,15 +178,14 @@ namespace ISBM_Temp_Sensor
             }
             catch (Exception)
             {
-                //Your exception handling code here.
+                // Your exception handling code here.
             }
 
-            //Start publish timer again, if the end user didn't push the
-            //the button to stop message publication.
+            //Start publish timer again, if the end user didn't push the the button to stop message publication.
             if ((string)buttonPublish.Content != "Publish")
             {
                 textBlockPublishStatus.Text = "Idle";
-                //Publish completed, start publish timer again.
+                // Publish completed, start publish timer again.
                 timerPublish.Start();
             }
             else
@@ -200,17 +199,16 @@ namespace ISBM_Temp_Sensor
         {
             
             string myIcCDeviceSelector = I2cDevice.GetDeviceSelector();
-            //Get all my devices information.
+            // Get all my devices information.
             IReadOnlyList<DeviceInformation> myDevices = await DeviceInformation.FindAllAsync(myIcCDeviceSelector);
 
-            //According to Datasheet, default address of MCP9808 is 0x18 
+            // According to Datasheet, default address of MCP9808 is 0x18 
             I2cConnectionSettings myMCP9808Settings = new I2cConnectionSettings(0x18);
             
-            //Get my temperature sensor device. I only have the MCP9808 on
-            //the I2c address bus. Device "0" should be my MCP9808.
+            // Get my temperature sensor device. I only have the MCP9808 on the I2c address bus. Device "0" should be my MCP9808.
             MCP9808 = await I2cDevice.FromIdAsync(myDevices[0].Id, myMCP9808Settings);
 
-            //Initialize temperature timer.
+            // Initialize temperature timer.
             timerTemperature = new DispatcherTimer();
             timerTemperature.Interval = TimeSpan.FromMilliseconds(1000);
             timerTemperature.Tick += TimerTemperature_Tick;
@@ -221,14 +219,14 @@ namespace ISBM_Temp_Sensor
         private async Task IntializePublishAsync()
         {
             
-            //Get default message template.
+            // Get default message template.
             string filename = @"Assets\SyncMeasurements.json";
             StorageFolder folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
             StorageFile file = await folder.GetFileAsync(filename);
             string JsonFromFile = await Windows.Storage.FileIO.ReadTextAsync(file);
             templateBOD = JsonFromFile;
 
-            //Initialize Pusblish timer.
+            // Initialize Pusblish timer.
             timerPublish = new DispatcherTimer();
             timerPublish.Interval = TimeSpan.FromMilliseconds(10000);
             timerPublish.Tick += TimerPublish_Tick;
@@ -236,7 +234,7 @@ namespace ISBM_Temp_Sensor
                
         private void ButtonPublish_Click(object sender, RoutedEventArgs e)
         {
-            //Start Publish timer if button contnent is "Stop"
+            // Start Publish timer if button contnent is "Stop"
             if ((string)buttonPublish.Content == "Publish")
             {
                 timerPublish.Start();
@@ -265,10 +263,10 @@ namespace ISBM_Temp_Sensor
 
             try
             {
-                //Create a new HTTP Content.
+                // Create a new HTTP Content.
                 var httpContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
                 
-                //Create a new HTTP Client.
+                // Create a new HTTP Client.
                 HttpClient client = new HttpClient();
                 
                 Uri _uri = new Uri(uriString);
@@ -279,25 +277,25 @@ namespace ISBM_Temp_Sensor
                 switch (httpMethod)
                 {
                     case "Get":
-                        //Not in use.
+                        // Not in use.
                         break;
 
                     case "Post":
-                        //Send Post request.
+                        // Send Post request.
                         httpResponse = await client.PostAsync(uriString, httpContent);
                         break;
 
                     case "Put":
-                        //Not in use.
+                        // Not in use.
                         break;
 
                     case "Delete":
-                        //Send delete request.
+                        // Send delete request.
                         httpResponse = client.DeleteAsync(uriString).Result;
                         break;
                 }
 
-                //Read HTTP response.
+                // Read HTTP response.
                 string responseContent = await httpResponse.Content.ReadAsStringAsync();
                 textBoxStatusCode.Text = "" + (int)httpResponse.StatusCode;
                 textBoxMessage.Text = httpResponse.ReasonPhrase;
@@ -313,14 +311,14 @@ namespace ISBM_Temp_Sensor
 
         private async void ButtonConnect_Click(object sender, RoutedEventArgs e)
         {
-            //Open a publication session if button content is "Connect".
+            // Open a publication session if button content is "Connect".
             if ((string)buttonConnect.Content == "Connect")
             {
-                //Percent encoding
+                // Percent encoding
                 string encodedChannelId = System.Uri.EscapeDataString(textBoxChannelId.Text);
                 string uriString = String.Format(textBoxHostName.Text + "/channels/{0}/publication-sessions", encodedChannelId.Replace(@"%2F", "%252F"));
 
-                //Open a publication session using ISBMAPI function.
+                // Open a publication session using ISBMAPI function.
                 string _ISBMResponse = await ISBMApi("", uriString, "Post");
                 textBoxResponse.Text = _ISBMResponse;
 
@@ -343,9 +341,9 @@ namespace ISBM_Temp_Sensor
             }
             else
             {
-                //Close a publication session if button content is not "Connect".
+                // Close a publication session if button content is not "Connect".
                 string uriString = String.Format(textBoxHostName.Text + "/sessions/{0}", textBoxSessionId.Text);
-                //Close a publication session using ISBMAPI function.
+                // Close a publication session using ISBMAPI function.
                 string _ISBMResponse = ISBMApi("", uriString, "Delete").Result;
                 textBoxResponse.Text = _ISBMResponse;
 
