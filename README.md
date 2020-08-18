@@ -22,6 +22,10 @@ To build a Raspberry Pi IoT device to measure room temperature using MCP9808. Th
     
      * NuGet Packages
      
+### MCP9808 Wiring
+
+![image]
+     
 ### Useful Links
 
 http://www.openoandm.org/files/standards/ISBM-2.0.pdf
