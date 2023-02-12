@@ -5,9 +5,9 @@
  *          regardless of the actual service bus that delivers the messages.  
  *          
  * Author: Claire Wong
- * Date Created:  2020/05/02
+ * Date Created:  2023/01/05
  * 
- * (c) 2020
+ * (c) 2023
  * This code is licensed under MIT license
  * 
 */
@@ -35,6 +35,9 @@ using Newtonsoft.Json.Linq;
 using Windows.Storage;
 using Windows.Devices.I2c;
 using Windows.Devices.Enumeration;
+using ISBM20ClientAdapter;
+using ISBM20ClientAdapter.ResponseType;
+using ISBM20ClientAdapter.Enums;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -53,7 +56,10 @@ namespace ISBM_Temp_Sensor
         DispatcherTimer timerPublish;
         DispatcherTimer timerInitialize;
        
-        I2cDevice MCP9808;     
+        I2cDevice MCP9808;
+
+        //ISBM Provider Publication Service
+        ProviderPublicationService myProviderPublicationService = new ProviderPublicationService();
 
         public MainPage()
         {
@@ -147,34 +153,27 @@ namespace ISBM_Temp_Sensor
             objBOD["syncMeasurements"]["applicationArea"]["bODID"] = System.Guid.NewGuid().ToString();
             objBOD["syncMeasurements"]["applicationArea"]["creationDateTime"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
+            objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["UUID"] = System.Guid.NewGuid().ToString();
             objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["recorded"]["dateTime"] = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
-            objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["data"]["measure"]["value"]["numeric"] = textBlockValue.Text;
-
-            // Build ISBM message, HTTP request body.
-            string jsonBOD = "{\"topics\": [\"" + textBoxTopic.Text + "\"], \"messageContent\": {\"mediaType\": \"application/json\" , \"content\":" + objBOD.ToString(Newtonsoft.Json.Formatting.None) + "},\"expiry\": \"P1D\"}";
-             
-            string uriString = String.Format(textBoxHostName.Text + "/sessions/{0}/publications", textBoxSessionId.Text);
+            objBOD["syncMeasurements"]["dataArea"]["measurements"][0]["measurement"][0]["data"]["measure"]["value"] = textBlockValue.Text;
 
             try
             {
+                                
+                PostPublicationResponse myPostPublicationResponse = myProviderPublicationService.PostPublication(textBoxHostName.Text, textBoxSessionId.Text, textBoxTopic.Text, objBOD.ToString(Newtonsoft.Json.Formatting.None));
+              
+                textBoxResponse.Text = myPostPublicationResponse.ReasonPhrase;
+                textBoxStatusCode.Text = myPostPublicationResponse.StatusCode.ToString();
 
-                string _ChannelResponse = "";
-                // Try three times just in case with a poor internet connection
-                for (int x = 0; x < 3; x++)
+                if (myPostPublicationResponse.StatusCode == 201)
                 {
-                    // Skip publishing message if the status code is "201", success.
-                    if (textBoxStatusCode.Text != "201")
-                    {
-                        // Publish ISBM message using ISBMAPI function.
-                        _ChannelResponse = await ISBMApi(jsonBOD, uriString, "Post");
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    textBoxMessage.Text = myPostPublicationResponse.MessageID;
                 }
-
-                textBoxResponse.Text = _ChannelResponse;
+                else
+                {
+                    textBoxMessage.Text = "";
+                }
+                
             }
             catch (Exception)
             {
@@ -258,77 +257,21 @@ namespace ISBM_Temp_Sensor
             }
         }
 
-        private async Task<string> ISBMApi(string requestBody, string uriString, string httpMethod)
-        {
-
-            try
-            {
-                // Create a new HTTP Content.
-                var httpContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-                
-                // Create a new HTTP Client.
-                HttpClient client = new HttpClient();
-                
-                Uri _uri = new Uri(uriString);
-                client.BaseAddress = _uri;
-
-                HttpResponseMessage httpResponse = null;
-
-                switch (httpMethod)
-                {
-                    case "Get":
-                        // Not in use.
-                        break;
-
-                    case "Post":
-                        // Send Post request.
-                        httpResponse = await client.PostAsync(uriString, httpContent);
-                        break;
-
-                    case "Put":
-                        // Not in use.
-                        break;
-
-                    case "Delete":
-                        // Send delete request.
-                        httpResponse = client.DeleteAsync(uriString).Result;
-                        break;
-                }
-
-                // Read HTTP response.
-                string responseContent = await httpResponse.Content.ReadAsStringAsync();
-                textBoxStatusCode.Text = "" + (int)httpResponse.StatusCode;
-                textBoxMessage.Text = httpResponse.ReasonPhrase;
-
-                return responseContent;
-            }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-
-        }
-
-        private async void ButtonConnect_Click(object sender, RoutedEventArgs e)
+        private void ButtonConnect_Click(object sender, RoutedEventArgs e)
         {
             // Open a publication session if button content is "Connect".
             if ((string)buttonConnect.Content == "Connect")
             {
-                // Percent encoding
-                string encodedChannelId = System.Uri.EscapeDataString(textBoxChannelId.Text);
-                string uriString = String.Format(textBoxHostName.Text + "/channels/{0}/publication-sessions", encodedChannelId.Replace(@"%2F", "%252F"));
-
-                // Open a publication session using ISBMAPI function.
-                string _ISBMResponse = await ISBMApi("", uriString, "Post");
-                textBoxResponse.Text = _ISBMResponse;
-
+                //Open Publication Session
+                OpenPublicationSessionResponse myOpenPublicationSessionResponse = myProviderPublicationService.OpenPublicationSession(textBoxHostName.Text, textBoxChannelId.Text, ServerType.Azure);
+                
                 try
                 {
-
-                    if (textBoxStatusCode.Text == "201")
+                    textBoxResponse.Text = myOpenPublicationSessionResponse.ReasonPhrase;
+                    textBoxStatusCode.Text = myOpenPublicationSessionResponse.StatusCode.ToString();
+                    if (myOpenPublicationSessionResponse.StatusCode == 201)
                     {
-                        JObject objResponseContent = JObject.Parse(_ISBMResponse);
-                        textBoxSessionId.Text = (string)objResponseContent["sessionId"];
+                        textBoxSessionId.Text = myOpenPublicationSessionResponse.SessionID;
 
                         buttonConnect.Content = "Disconnect";
                         buttonPublish.IsEnabled = true;
@@ -341,13 +284,13 @@ namespace ISBM_Temp_Sensor
             }
             else
             {
-                // Close a publication session if button content is not "Connect".
-                string uriString = String.Format(textBoxHostName.Text + "/sessions/{0}", textBoxSessionId.Text);
-                // Close a publication session using ISBMAPI function.
-                string _ISBMResponse = ISBMApi("", uriString, "Delete").Result;
-                textBoxResponse.Text = _ISBMResponse;
+                //Close Publication Session 
+                ClosePublicationSessionResponse myClosePublicationSessionResponse = myProviderPublicationService.ClosePublicationSession(textBoxHostName.Text, textBoxSessionId.Text);
 
-                if (textBoxStatusCode.Text == "204")
+                textBoxResponse.Text = myClosePublicationSessionResponse.ReasonPhrase;
+                textBoxStatusCode.Text = myClosePublicationSessionResponse.StatusCode.ToString();
+
+                if (myClosePublicationSessionResponse.StatusCode == 204)
                 {
                     textBoxSessionId.Text = "";
 

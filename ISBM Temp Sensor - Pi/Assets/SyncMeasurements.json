@@ -14,7 +14,7 @@
         {
           "measurementLocation": {
             "UUID": "e5750334-45b0-018b-2c69-56182bc27635",
-            "ShortName": "LH Gearbox Drive Temperature",
+            "shortName": "LH Gearbox Drive Temperature",
             "infoSource": { "UUID": "9b005c91-a36f-4d69-a3ed-cc51e78e3a66" }
           },
           "measurement": [
@@ -25,15 +25,13 @@
               "infoSource": { "UUID": "9b005c91-a36f-4d69-a3ed-cc51e78e3a66" },
               "data": {
                 "measure": {
-                  "value": {
-                    "numeric": "28.03"
-                  },
-                    "UnitOfMeasure": {
-                      "UUID": "3912c639-8c27-4b29-868b-a0f01790770f",
-                      "ShortName": "Degrees Celsius",
-                      "InfoSource": { "UUID": "cf3f3a8a-1e42-4f15-9288-9cf2241e163d" }
-                    }
+                  "value": "28.88",
+                  "unitOfMeasure": {
+                    "UUID": "3912c639-8c27-4b29-868b-a0f01790770f",
+                    "shortName": "Degrees Celsius",
+                    "infoSource": { "UUID": "cf3f3a8a-1e42-4f15-9288-9cf2241e163d" }
                   }
+                }
               }
             }
           ]

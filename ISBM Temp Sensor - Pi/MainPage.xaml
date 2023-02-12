@@ -20,7 +20,7 @@
         <Button x:Name="buttonConnect" Height="80" Margin="959,746,0,0" VerticalAlignment="Top" Width="200" Background="{ThemeResource ComboBoxItemSelectedBackgroundThemeBrush}" Foreground="{ThemeResource SearchBoxButtonForegroundThemeBrush}" Click="ButtonConnect_Click" Content="Connect" RenderTransformOrigin="0.012,2.25" FontSize="32"/>
         <TextBlock x:Name="textBlockISBMSettings" HorizontalAlignment="Left" Margin="61,201,0,0" Text="ws-ISBM Settings" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="32"/>
         <TextBlock x:Name="textBlockChannelID" HorizontalAlignment="Left" Margin="147,359,0,0" Text="Channel ID" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="32"/>
-        <TextBox x:Name="textBoxChannelId" HorizontalAlignment="Left" Margin="360,352,0,0" Text="/Robot Fleet/Task Group 1/ISO18435:D1.2/Publication" VerticalAlignment="Top" Width="1026" FontSize="32" Height="57" MinHeight="15"/>
+        <TextBox x:Name="textBoxChannelId" HorizontalAlignment="Left" Margin="360,352,0,0" Text="/Robot Fleet/Ball Shooter/Drive System/ISO18435:D1.2/Publication" VerticalAlignment="Top" Width="1026" FontSize="32" Height="57" MinHeight="15"/>
         <TextBlock x:Name="textBlockTopic" HorizontalAlignment="Left" Margin="144.952,438.5,0,0" Text="Topic" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="32" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
             <TextBlock.RenderTransform>
                 <CompositeTransform SkewX="-1.909" TranslateX="0.717" Rotation="-1.069"/>

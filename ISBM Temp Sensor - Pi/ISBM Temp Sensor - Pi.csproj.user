@@ -22,7 +22,7 @@
     <UseEmulator>false</UseEmulator>
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
     <AuthenticationMode>Universal</AuthenticationMode>
-    <RemoteDebugMachine>bingothebest</RemoteDebugMachine>
+    <RemoteDebugMachine>claire-rpi3</RemoteDebugMachine>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DebugEngines>
     </DebugEngines>
