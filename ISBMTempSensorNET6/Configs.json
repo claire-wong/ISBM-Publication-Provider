@@ -1,0 +1,9 @@
+{
+	"hostName": "Your ISBM Server Adapter Host Address",
+	"channelId": "/services/general/publication",
+	"topic": "OIIE:S30:V1.1/CCOM-JSON:SyncMeasurements:V1.0",
+	"authentication": 0,
+	"userName": "",
+	"password": "",
+	"simMode": 1
+}
