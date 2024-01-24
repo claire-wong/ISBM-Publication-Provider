@@ -42,7 +42,7 @@ A data mode option allows users to choose between sensor-acquired or simulated t
 
 ### Configurations
 
-   Configs.json
+    Configs.json
 
     {
 	   "hostName": "Your ISBM Server Adapter Host Address",
