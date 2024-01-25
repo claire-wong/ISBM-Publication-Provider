@@ -69,6 +69,18 @@ A data mode option allows users to choose between sensor-acquired or simulated t
 
 ### Useful Links
 
+#### Standard Organizations
+   1. [OpenO&M](https://openoandm.org/)
+   2. [MIMOSA](https://www.mimosa.org/)
+   3. [International Society of Automation](https://www.isa.org/)
+   4. [OAGi](https://oagi.org/)
+
+#### Development Tools
+   1. [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/)
+   2. [Azure Service Bus Quick Guide](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal)
+   3. [Microsoft® SQL Server® 2022 Express](https://www.microsoft.com/en-gb/download/details.aspx?id=104781)
+   4. [SQL Server Management Studio (SSMS) 19.3](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#download-ssms)
+
 http://www.openoandm.org/files/standards/ISBM-2.0.pdf
 
 https://www.mimosa.org/mimosa-ccom/
