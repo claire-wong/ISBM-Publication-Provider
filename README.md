@@ -5,6 +5,15 @@ This is one of the three-part series of proof-of-concept projects with the prima
 ![image](/Documents/Images/IoT-Demo.jpg)
 Figure 1. The summary of the IoT demo using OIIE standards. Included in this three-part series are ISBM-2.0-Server-Adapter and ISBM-Publication-Consumer, hosted in their respective repositories.
 
+### Contents
+  
+   1. [Objectives](#Objectives)
+   2. [Project Information](#Project-Information)
+   3. [Temperature Sensor Wiring](#MCP9808-Wiring)
+   4. [Before Running the Program](Before-Running-the-Program)
+   5. [Useful Links](#Useful-Links)
+   6. [Quick Reference](#Quick-Reference)
+  
 ### Objectives
 
 Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in the OAGIS BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
@@ -41,9 +50,9 @@ A data mode option allows users to choose between sensor-acquired or simulated t
 
 ![image](/Documents/Wiring/MCP9808-Wiring.jpg)
 
-### Configurations
+### Before Running the Program
 
-    Configs.json
+    Make sure configurations are set properly in the Configs.json
 
     {
 	   "hostName": "Your ISBM Server Adapter Host Address",
@@ -65,3 +74,10 @@ http://www.openoandm.org/files/standards/ISBM-2.0.pdf
 https://www.mimosa.org/mimosa-ccom/
 
 https://ww1.microchip.com/downloads/en/DeviceDoc/25095A.pdf
+
+### Quick Reference
+
+   1. OIIE - [OpenO&M Open Industrial Interoperability Ecosystem](https://www.mimosa.org/open-industrial-interoperability-ecosystem-oiie/)
+   2. ISBM - [International Society of Automation ISA-95 Message Service Model](https://openoandm.org/files/standards/ISBM-2.0.pdf)
+   3. CCOM - [MIMOSA Common Conceptual Object Model](https://www.mimosa.org/mimosa-ccom/)
+   4. BOD - [OAGIS Business Object Document](https://www.oagidocs.org/docs/)
