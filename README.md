@@ -8,7 +8,7 @@ Included in this three-part series are ISBM-2.0-Server-Adapter and ISBM-Publicat
 
 ### Objectives
 
-Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in an OAGIS BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
+Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in the OAGIS BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
 
 ![image](/Documents/Images/IoT-Demo-Temperature-Sensor.jpg)
 
@@ -32,7 +32,8 @@ A data mode option allows users to choose between sensor-acquired or simulated t
 #### Dependencies
      1.  .Net 6
      2.  Microsoft.NetCore.UniversalWindowsPlatform 6.2.9 @
-     3.  NewtonSoft v12.0.2 @
+     3.  RapidRedPanda.ISBM.ClientAdapter 2.0.1 @
+     4.  NewtonSoft v12.0.2 @
     
      @ NuGet Packages
      
