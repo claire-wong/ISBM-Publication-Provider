@@ -8,7 +8,7 @@ Included in this three-part series are ISBM-2.0-Server-Adapter and ISBM-Publicat
 
 ### Objectives
 
-Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in a BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
+Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in an OAGIS BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
 
 ![image](/Documents/Images/IoT-Demo-Temperature-Sensor.jpg)
 
