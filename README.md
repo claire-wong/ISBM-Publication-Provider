@@ -10,7 +10,7 @@ Figure 1. The summary of the IoT demo using OIIE standards. Included in this thr
    1. [Objectives](#Objectives)
    2. [Project Information](#Project-Information)
    3. [Temperature Sensor Wiring](#MCP9808-Wiring)
-   4. [Before Running the Program](Before-Running-the-Program)
+   4. [Before Running the Program](#Before-Running-the-Program)
    5. [Useful Links](#Useful-Links)
    6. [Quick Reference](#Quick-Reference)
   
