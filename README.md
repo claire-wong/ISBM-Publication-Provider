@@ -3,14 +3,14 @@
 This is one of the three-part series of proof-of-concept projects with the primary objective of constructing an interoperable IoT information cluster. The focus is on utilizing non-proprietary Open Industrial Interoperability Ecosystem (OIIE) open standards. Each project within this series explores key facets of building a cohesive and scalable IoT infrastructure, demonstrating the potential of OIIE standards in promoting interoperability in the interconnect world.
 
 ![image](/Documents/Images/IoT-Demo.jpg)
-
-Included in this three-part series are ISBM-2.0-Server-Adapter and ISBM-Publication-Consumer, hosted in their respective repositories.
+Figure 1. The summary of the IoT demo using OIIE standards. Included in this three-part series are ISBM-2.0-Server-Adapter and ISBM-Publication-Consumer, hosted in their respective repositories.
 
 ### Objectives
 
 Build a Raspberry Pi IoT device running on Raspbian to measure room temperature using MCP9808. The collected data will be published in CCOM format, embedded in the OAGIS BOD message via an ISBM 2.0 Server adapter, making it accessible for other IoT devices to consume.
 
 ![image](/Documents/Images/IoT-Demo-Temperature-Sensor.jpg)
+Figure 2. This project focuses on utilizing the temperature sensor as a sample ISBM Publication Provider. The temperature data will be published via the ISBM Server Adapter for other devices to consume in an interoperable manner.
 
 ### Project Information
 
