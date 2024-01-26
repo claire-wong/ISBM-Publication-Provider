@@ -42,7 +42,8 @@ A data mode option allows users to choose between sensor-acquired or simulated t
      1.  .Net 6
      2.  Microsoft.NetCore.UniversalWindowsPlatform 6.2.9 @
      3.  RapidRedPanda.ISBM.ClientAdapter 2.0.1 @
-     4.  NewtonSoft v12.0.2 @
+     4.  Iot.Device.Bindings 3.1.0 @
+     5.  NewtonSoft v12.0.2 @
     
      @ NuGet Packages
      
