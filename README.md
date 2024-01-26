@@ -36,7 +36,7 @@ A data mode option allows users to choose between sensor-acquired or simulated t
      1.  Visual Studio 2022 Community
      2.  Raspberry Pi 3b
      3.  Raspbian Version 11 (bullseye)"
-     4.  MCP9808 Temperature sensor
+     4.  MCP9808 Temperature Sensor
 
 #### Dependencies
      1.  .Net 6
@@ -77,15 +77,9 @@ A data mode option allows users to choose between sensor-acquired or simulated t
 
 #### Development Tools
    1. [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/)
-   2. [Azure Service Bus Quick Guide](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal)
-   3. [Microsoft® SQL Server® 2022 Express](https://www.microsoft.com/en-gb/download/details.aspx?id=104781)
-   4. [SQL Server Management Studio (SSMS) 19.3](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#download-ssms)
-
-http://www.openoandm.org/files/standards/ISBM-2.0.pdf
-
-https://www.mimosa.org/mimosa-ccom/
-
-https://ww1.microchip.com/downloads/en/DeviceDoc/25095A.pdf
+   2. [Raspberry Pi OS (previously called Raspbian)](https://www.raspberrypi.com/software/)
+   3. [RapidRedPanda.ISBM.ClientAdapter](https://www.nuget.org/packages/RapidRedPanda.ISBM.ClientAdapter/#readme-body-tab)
+   4. [MCP9808 Temperature Sensor Specifications](https://ww1.microchip.com/downloads/en/DeviceDoc/25095A.pdf)
 
 ### Quick Reference
 
