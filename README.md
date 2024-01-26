@@ -27,6 +27,10 @@ Figure 2. This project focuses on utilizing the temperature sensor as a sample I
 
 A console program written in C#, targeting .NET 6, adopts a cross-platform approach for diverse devices with different hardware architectures.
 
+In this project, the NuGet package [RapidRedPanda.ISBM.ClientAdapter](https://www.nuget.org/packages/RapidRedPanda.ISBM.ClientAdapter/#readme-body-tab) is utilized. This package is designed to handle all the details of ISBM implementations for communication with ISBM servers. The ISBM interface will be accessible through object classes that developers should find user-friendly and easy to use. This will cut down the learning curve of building ISBM-compliant devices or applications.
+
+There is also a repository, [ISBM-2.0-Client-SDK](https://github.com/claire-wong/ISBM-2.0-Client-SDK), a full development kit for anyone wishing to learn more using the ISBM Client Adapter.
+
 The program starts with an Open Publication Session, proceeds to measure temperature, and posts the publication every five seconds. Users can stop the temperature acquisition and publication loop at their discretion. Additionally, the program provides an option to Close the Publication Session before exiting.
 
 A data mode option allows users to choose between sensor-acquired or simulated temperature data. This feature enables the program to function when a physical temperature sensor system is not available.
